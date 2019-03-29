@@ -1,0 +1,14 @@
+[package]
+name = "paperpi"
+version = "0.9.0"
+authors = ["Miroslav Prasil <miroslav.prasil@amundi.com>"]
+
+[dependencies]
+cursive = "0.11"
+reqwest = "0.9.11"
+serde = "1.0.89"
+serde_derive = "1.0.89"
+serde_json = "1.0"
+serializable_enum = "0.4.0"
+clap = "2.32.0"
+crossbeam-channel = "0.3"

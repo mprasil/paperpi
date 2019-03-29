@@ -1,0 +1,58 @@
+build-armv7hf:
+  stage: build
+  image: rust
+  artifacts:
+    paths:
+      - target/armv7-unknown-linux-gnueabihf/release/paperpi
+    expire_in: 5 years
+  only: 
+    - master
+  variables:
+    CARGO_HOME: "/root/.cargo"
+    USER: "root"
+    CC_armv7_unknown_linux_gnueabihf: "/usr/bin/arm-linux-gnueabihf-gcc"
+    CROSS_COMPILE: "1"
+    OPENSSL_INCLUDE_DIR: "/usr/include/arm-linux-gnueabihf"
+    OPENSSL_LIB_DIR: "/usr/lib/arm-linux-gnueabihf"
+  script:
+    - >
+      sed 's/^deb/deb-src/' /etc/apt/sources.list >
+      /etc/apt/sources.list.d/deb-src.list
+    - dpkg --add-architecture armhf
+    - apt-get update
+    - >
+      apt-get install -y \
+        gcc-arm-linux-gnueabihf \
+        libncursesw5-dev:armhf \
+        libssl-dev:armhf \
+        libc6-dev:armhf
+    - mkdir -p ~/.cargo
+    - echo '[target.armv7-unknown-linux-gnueabihf]' >> ~/.cargo/config
+    - echo 'linker = "arm-linux-gnueabihf-gcc"' >> ~/.cargo/config
+    - apt-get install -y gcc-arm-linux-gnueabihf
+    - rustup target add armv7-unknown-linux-gnueabihf
+    - cargo build --release --target=armv7-unknown-linux-gnueabihf 
+
+build-amd64:
+  stage: build
+  image: rust
+  artifacts:
+    paths:
+      - target/release/paperpi
+    expire_in: 5 years
+  only: 
+    - master
+  script:
+    - cargo build --release
+
+build-debug:
+  stage: build
+  image: rust
+  artifacts:
+    paths:
+      - target/debug/paperpi
+    expire_in: 1 week
+  except: 
+    - master
+  script:
+    - cargo build
