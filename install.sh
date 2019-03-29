@@ -7,7 +7,7 @@ curl -L -o /usr/local/bin/paperpi 'https://github.com/mprasil/paperpi/releases/l
 chmod a+x /usr/local/bin/paperpi
 
 echo "==== Creating launch script ===="
-read -p "Please provide Paperspace token now: " API_TOKEN
+read -p "Please provide Paperspace token now: " API_TOKEN < /dev/tty
 
 cat > Paperspace.sh <<'EOF'
 #!/bin/bash
@@ -34,6 +34,7 @@ echo "paperpi $API_TOKEN" >> Paperspace.sh
 echo "joy2keyStop" >> Paperspace.sh
 
 chmod a+x Paperspace.sh
+chown pi:pi Paperspace.sh
 
 echo "==== Done ===="
 echo "Don't forget to restart Emulation station now"
