@@ -2,8 +2,7 @@
 
 Paperpi is a simple [Paperspace](https://paperspace.io/&R=GWR0NP) API client app, that allows you to start and stop virtual servers via simple ncurses-based interface. The purpose of this application is to control your Paperspace instances from something like [RetroPie](https://retropie.org.uk/) - preferably without the need to stop using your controller.
 
-[screen]
-
+![Screenshot](screenshot.png)
 
 ## Usage
 
